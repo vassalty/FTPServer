@@ -1,8 +1,5 @@
-import com.sun.security.ntlm.Server;
-
 import java.io.*;
 import java.net.*;
-import java.util.*;
 
 class FTPServer {
 
