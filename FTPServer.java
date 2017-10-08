@@ -40,14 +40,14 @@ class FTPServer {
 
             dataSocket.close();
             System.out.println("Data Socket closed");
-        }
     
-        //......................
+            //......................
             
 
-        if(clientCommand.equals("retr:")) {
-            //..............................
-		    //..............................
+            if(clientCommand.equals("retr:")) {
+                //..............................
+                //..............................
+            }
         }
     }
 }
