@@ -8,12 +8,7 @@ class FTPServer {
 
     public static void main(String[] args) throws IOException {
 
-        String fromClient;
-        String clientCommand;
-        byte[] data;
-
         ServerSocket welcomeSocket = new ServerSocket(12000);
-        String frstln;
 
         while(true) {
             Socket connectionSocket = welcomeSocket.accept();
