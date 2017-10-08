@@ -31,35 +31,34 @@ class FTPClient {
                         
                         Socket ControlSocket= new Socket(serverName, port1);
                         
-                        while(isOpen && clientgo)
-                        {      
+                        while(isOpen && clientgo) {      
                         
-                        DataOutputStream outToServer = 
-                        new DataOutputStream(ControlSocket.getOutputStream()); 
-                        
-                        DataInputStream inFromServer = new DataInputStream(new BufferedInputStream             (ControlSocket.getInputStream()));
-                        
-                        sentence = inFromUser.readLine();
-                        
-                        if(sentence.equals("list:")) {
-                        
-                                port = port +2;
-                                System.out.println(port);
-                                ServerSocket welcomeData = new ServerSocket(port);
-                                outToServer.writeBytes (port + " " + sentence + " " + '\n');
-
-                                Socket dataSocket =welcomeData.accept(); 
-                                DataInputStream inData = new DataInputStream(new BufferedInputStream 					(dataSocket.getInputStream()));
-                                while(notEnd) {
-                                        modifiedSentence = inData.readUTF();
-                                //........................................
-                                //........................................
-                                }
+                                DataOutputStream outToServer = 
+                                new DataOutputStream(ControlSocket.getOutputStream()); 
                                 
+                                DataInputStream inFromServer = new DataInputStream(new BufferedInputStream             (ControlSocket.getInputStream()));
+                                
+                                sentence = inFromUser.readLine();
+                                
+                                if(sentence.equals("list:")) {
+                                
+                                        port = port +2;
+                                        System.out.println(port);
+                                        ServerSocket welcomeData = new ServerSocket(port);
+                                        outToServer.writeBytes (port + " " + sentence + " " + '\n');
 
-                                welcomeData.close();
-                                dataSocket.close();
-                                System.out.println("\nWhat would you like to do next: \n retr: file.txt ||  				stor: file.txt  || close");
+                                        Socket dataSocket =welcomeData.accept(); 
+                                        DataInputStream inData = new DataInputStream(new BufferedInputStream 					(dataSocket.getInputStream()));
+                                        while(notEnd) {
+                                                modifiedSentence = inData.readUTF();
+                                        //........................................
+                                        //........................................
+                                        }
+                                        
+
+                                        welcomeData.close();
+                                        dataSocket.close();
+                                        System.out.println("\nWhat would you like to do next: \n retr: file.txt ||  				stor: file.txt  || close");
 
                                 }
                                 else if(sentence.startsWith("retr: "))
