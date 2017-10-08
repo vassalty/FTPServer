@@ -25,10 +25,10 @@ class FTPClient {
         if(sentence.startsWith("connect")){
             String serverName = tokens.nextToken(); // pass the connect command
             serverName = tokens.nextToken();
-            port1 = Integer.parseInt(tokens.nextToken());
+            int port = Integer.parseInt(tokens.nextToken());
             System.out.println("You are connected to " + serverName);
             
-            Socket ControlSocket= new Socket(serverName, port1);
+            Socket ControlSocket= new Socket(serverName, port);
 
             DataOutputStream outToServer = 
             new DataOutputStream(ControlSocket.getOutputStream()); 
@@ -41,7 +41,7 @@ class FTPClient {
                 
                 if(sentence.equals("list:")) {
             
-                    port = port +2;
+                    port+= 2;
                     System.out.println(port);
                     ServerSocket welcomeData = new ServerSocket(port);
                     outToServer.writeBytes (port + " " + sentence + " " + '\n');
