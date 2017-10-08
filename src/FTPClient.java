@@ -5,10 +5,12 @@ import java.text.*;
 import java.lang.*;
 import javax.swing.*;
 
-class FTPClient { 
+class FTPClient {
 
-    public static void main(String argv[]) throws Exception { 
-        String sentence; 
+    
+	
+	public FTPClient( ) throws Exception {
+		String sentence; 
         String modifiedSentence; 
         boolean isOpen = true;
         int number=1;
@@ -66,5 +68,9 @@ class FTPClient {
                 }
             }
         }
+	}
+
+    public static void main(String argv[]) throws Exception { 
+        new FTPClient();
     } 
 }
