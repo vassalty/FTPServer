@@ -1,4 +1,4 @@
-import java.io.*; 
+import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.text.*;
@@ -7,8 +7,9 @@ import javax.swing.*;
 
 class FTPClient {
 
-	public FTPClient( ){
-	    try {
+
+    public FTPClient() {
+        try {
             String sentence;
             String modifiedSentence;
             boolean isOpen = true;
@@ -22,56 +23,56 @@ class FTPClient {
             sentence = inFromUser.readLine();
             StringTokenizer tokens = new StringTokenizer(sentence);
 
+            while (!sentence.startsWith("connect")) {
 
-            if (sentence.startsWith("connect")) {
-                String serverName = tokens.nextToken(); // pass the connect command
-                serverName = tokens.nextToken();
-                int port = Integer.parseInt(tokens.nextToken());
-                System.out.println("You are connected to " + serverName);
+            }
 
-                Socket ControlSocket = new Socket(serverName, port);
+            String serverName = tokens.nextToken(); // pass the connect command
+            serverName = tokens.nextToken();
+            int port = Integer.parseInt(tokens.nextToken());
+            System.out.println("You are connected to " + serverName);
 
-                DataOutputStream outToServer =
-                        new DataOutputStream(ControlSocket.getOutputStream());
+            Socket ControlSocket = new Socket(serverName, port);
 
-                DataInputStream inFromServer = new DataInputStream(new BufferedInputStream(ControlSocket.getInputStream()));
+            DataOutputStream outToServer =
+                    new DataOutputStream(ControlSocket.getOutputStream());
 
-                while (isOpen && clientgo) {
+            DataInputStream inFromServer = new DataInputStream(new BufferedInputStream(ControlSocket.getInputStream()));
 
-                    sentence = inFromUser.readLine();
+            while (isOpen && clientgo) {
 
-                    if (sentence.equals("list:")) {
+                sentence = inFromUser.readLine();
 
-                        port += 2;
-                        System.out.println(port);
-                        ServerSocket welcomeData = new ServerSocket(port);
-                        outToServer.writeBytes(port + " " + sentence + " " + '\n');
+                if (sentence.equals("list:")) {
 
-                        Socket dataSocket = welcomeData.accept();
-                        DataInputStream inData = new DataInputStream(new BufferedInputStream(dataSocket.getInputStream()));
-                        while (notEnd) {
-                            modifiedSentence = inData.readUTF();
-                            //........................................
-                            //........................................
-                        }
+                    port += 2;
+                    System.out.println(port);
+                    ServerSocket welcomeData = new ServerSocket(port);
+                    outToServer.writeBytes(port + " " + sentence + " " + '\n');
 
-
-                        welcomeData.close();
-                        dataSocket.close();
-                        System.out.println("\nWhat would you like to do next: \n retr: file.txt || stor: file.txt  || close");
-
-                    } else if (sentence.startsWith("retr: ")) {
-                        //....................................................
+                    Socket dataSocket = welcomeData.accept();
+                    DataInputStream inData = new DataInputStream(new BufferedInputStream(dataSocket.getInputStream()));
+                    while (notEnd) {
+                        modifiedSentence = inData.readUTF();
+                        //........................................
+                        //........................................
                     }
+
+
+                    welcomeData.close();
+                    dataSocket.close();
+                    System.out.println("\nWhat would you like to do next: \n retr: file.txt || stor: file.txt  || close");
+
+                } else if (sentence.startsWith("retr: ")) {
+                    //....................................................
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e) {
-	        e.printStackTrace();
-        }
-	}
+    }
 
-    public static void main(String argv[]) throws Exception { 
+    public static void main(String argv[]) throws Exception {
         new FTPClient();
-    } 
+    }
 }
