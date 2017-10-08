@@ -4,7 +4,7 @@ import java.util.*;
 
 class FTPServer {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 	
         String fromClient;
         String clientCommand;
