@@ -6,17 +6,22 @@ import java.util.*;
 
 class FTPServer {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        ServerSocket welcomeSocket = new ServerSocket(12000);
+        try {
+            ServerSocket welcomeSocket = new ServerSocket(12000);
 
-        while(true) {
-            Socket connectionSocket = welcomeSocket.accept();
+            while (true) {
+                Socket connectionSocket = welcomeSocket.accept();
 
-            ServerThread serverThread = new ServerThread(connectionSocket);
+                ServerThread serverThread = new ServerThread(connectionSocket);
 
-            serverThread.run();
+                serverThread.run();
 
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
