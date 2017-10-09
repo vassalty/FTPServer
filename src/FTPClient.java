@@ -7,6 +7,56 @@ import javax.swing.*;
 
 class FTPClient {
 
+    public Socket createDataConnection(int controlPort, DataOutputStream outToServer, String sentence) {
+
+        Socket dataSocket = null;
+
+        try {
+            int dataPort = controlPort + 2;
+            ServerSocket welcomeData = new ServerSocket(dataPort);
+            outToServer.writeBytes(dataPort + " " + sentence + " " + '\n');
+            dataSocket = welcomeData.accept();
+            welcomeData.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            return dataSocket;
+        }
+
+        //TODO Need this
+//        DataInputStream inData = new DataInputStream(new BufferedInputStream(dataSocket.getInputStream()));
+//        while (notEnd) {
+//            modifiedSentence = inData.readUTF();
+//            //........................................
+//            //........................................
+
+
+//        welcomeData.close();
+//        dataSocket.close();
+//        System.out.println("\nWhat would you like to do next: \n retr: file.txt || stor: file.txt  || close");
+    }
+
+    public void destroyDataConnection() {
+
+    }
+
+    public void list() {
+
+    }
+
+    public void retr() {
+
+    }
+
+    public void stor() {
+
+    }
+
+    public void quit() {
+
+    }
 
     public FTPClient() {
         try {
@@ -24,7 +74,6 @@ class FTPClient {
             StringTokenizer tokens = new StringTokenizer(sentence);
 
             while (!sentence.startsWith("connect")) {
-
             }
 
             String serverName = tokens.nextToken(); // pass the connect command
@@ -39,32 +88,23 @@ class FTPClient {
 
             DataInputStream inFromServer = new DataInputStream(new BufferedInputStream(ControlSocket.getInputStream()));
 
-            while (isOpen && clientgo) {
+            while (isOpen) {
 
                 sentence = inFromUser.readLine();
 
-                if (sentence.equals("list:")) {
-
-                    port += 2;
-                    System.out.println(port);
-                    ServerSocket welcomeData = new ServerSocket(port);
-                    outToServer.writeBytes(port + " " + sentence + " " + '\n');
-
-                    Socket dataSocket = welcomeData.accept();
-                    DataInputStream inData = new DataInputStream(new BufferedInputStream(dataSocket.getInputStream()));
-                    while (notEnd) {
-                        modifiedSentence = inData.readUTF();
-                        //........................................
-                        //........................................
-                    }
-
-
-                    welcomeData.close();
-                    dataSocket.close();
-                    System.out.println("\nWhat would you like to do next: \n retr: file.txt || stor: file.txt  || close");
-
-                } else if (sentence.startsWith("retr: ")) {
-                    //....................................................
+                if (sentence.toLowerCase().equals("list")) {
+                    list();
+                } else if (sentence.toLowerCase().startsWith("retr ")) {
+                    retr();
+                }
+                else if (sentence.toLowerCase().startsWith("stor ")) {
+                    stor();
+                }
+                else if (sentence.toLowerCase().equals("quit")) {
+                    quit();
+                }
+                else {
+                    System.out.println("Unrecognized command!");
                 }
             }
         } catch (Exception e) {
