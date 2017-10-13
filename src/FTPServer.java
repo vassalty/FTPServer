@@ -11,6 +11,8 @@ class FTPServer {
             while (true) {
                 Socket connectionSocket = welcomeSocket.accept();
 
+		System.out.println(connectionSocket.getInetAddress().toString().substring(1) + " connected");
+
                 ServerThread serverThread = new ServerThread(connectionSocket);
 
                 serverThread.run();
