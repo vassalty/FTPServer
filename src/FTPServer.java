@@ -7,7 +7,7 @@ class FTPServer {
 
 		try {
 			ServerSocket welcomeSocket = new ServerSocket(12000);
-
+			
 			while (true) {
 				Socket connectionSocket = welcomeSocket.accept();
 
@@ -15,9 +15,9 @@ class FTPServer {
 
 				ServerThread serverThread = new ServerThread(connectionSocket);
 
-				serverThread.run();
+				serverThread.start();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
